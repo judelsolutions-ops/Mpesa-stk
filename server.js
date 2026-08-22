@@ -142,76 +142,40 @@ app.post("/pay", async (req, res) => {
 
         let amount = req.body.amount;
 
-
         // Remove spaces
-
-        phone =
-            phone
-            .replace(/\s/g, "");
-
-
-        // Convert 07XXXXXXXX
-
-        if (
-            phone.startsWith("0")
-        ) {
-
+        phone = phone.replace(/\s/g, "");
+        //Remove dashes
+        phone = phone.replace(/-/g, "");
+        // Convert 07XXXXXXXX to 2547XXXXXXXX
+        if (phone.startsWith("0")) {
             phone =
                 "254" +
                 phone.substring(1);
 
         }
 
-
         // Get access token
-
-        const accessToken =
-            await getAccessToken();
-
+        const accessToken = await getAccessToken();
 
         // Create timestamp
-
         const now =
             new Date();
 
         const timestamp =
-            now
-            .getFullYear()
-            .toString()
-
+            now.getFullYear().toString()
             +
-
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0")
-
+            String(now.getMonth() + 1).padStart(2, "0")
             +
-
-            String(
-                now.getDate()
-            ).padStart(2, "0")
-
+            String(now.getDate()).padStart(2, "0")
             +
-
-            String(
-                now.getHours()
-            ).padStart(2, "0")
-
+            String(now.getHours()).padStart(2, "0")
             +
-
-            String(
-                now.getMinutes()
-            ).padStart(2, "0")
-
+            String(now.getMinutes()).padStart(2, "0")
             +
-
-            String(
-                now.getSeconds()
-            ).padStart(2, "0");
+            String(now.getSeconds()).padStart(2, "0");
 
 
         // Generate password
-
         const password =
             Buffer
             .from(
